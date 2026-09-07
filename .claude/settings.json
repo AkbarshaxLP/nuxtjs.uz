@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"ru home: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"ru frontend: %{http_code}\\\\n\" http://localhost:3000/frontend)",
+      "Bash(curl -s -o /dev/null -w \"ru http-methods: %{http_code}\\\\n\" http://localhost:3000/frontend/http/http-methods)",
+      "Bash(curl -s -o /dev/null -w \"en home: %{http_code}\\\\n\" http://localhost:3000/en)",
+      "Bash(curl -s -o /dev/null -w \"en frontend: %{http_code}\\\\n\" http://localhost:3000/en/frontend)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"en http-methods: %{http_code}\\\\n\" http://localhost:3000/en/frontend/http/http-methods)",
+      "Bash(curl -s http://localhost:3000/en/frontend/http/http-methods)",
+      "Bash(netstat -ano)",
+      "Bash(curl -s -o /dev/null -w \"3001 ru home: %{http_code}\\\\n\" http://localhost:3001/)",
+      "Bash(curl -s -o /dev/null -w \"3001 en http-methods: %{http_code}\\\\n\" http://localhost:3001/en/frontend/http/http-methods)",
+      "Bash(curl -s http://localhost:3001/en/frontend/http/http-methods -o /tmp_page.html -w \"size:%{size_download}\\\\n\")",
+      "Bash(curl -s http://localhost:3001/en/frontend/http/http-methods)",
+      "Bash(curl -s http://localhost:3001/en/frontend/http/http-methods -o \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--WEB3-nuxtjs-uz\\\\d4d3d2f3-c7ac-4fb6-ab88-3610dda2ed22\\\\scratchpad\\\\en_page.html\")",
+      "Bash(curl -s -o /dev/null -w \"ru direct: %{http_code}\\\\n\" http://localhost:3001/frontend/http/http-methods)",
+      "Bash(curl -s http://localhost:3001/frontend/http/http-methods)",
+      "Bash(curl -s -o /dev/null -w \"uz direct: %{http_code}\\\\n\" http://localhost:3001/uz/frontend/http/http-methods)",
+      "Bash(curl -s http://localhost:3001/)",
+      "Bash(curl -s http://localhost:3001/en)",
+      "Bash(curl -s http://localhost:3001/uz)",
+      "Bash(curl -s http://localhost:3001/en/frontend)",
+      "Bash(curl -s http://localhost:3001/uz/frontend/http/put-vs-patch)",
+      "Bash(curl -s http://localhost:3001/en/frontend/http/http-methods -o \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--WEB3-nuxtjs-uz\\\\d4d3d2f3-c7ac-4fb6-ab88-3610dda2ed22\\\\scratchpad\\\\en_active.html\")",
+      "Bash(powershell -NoProfile -Command \"Test-Path 'd:\\\\WEB3\\\\nuxtjs_uz\\\\content\\\\uz\\\\frontend\\\\6.nuxt'\")",
+      "Bash(curl -s http://localhost:3001/uz/frontend)",
+      "Bash(curl -s http://localhost:3001/uz/frontend/javascript/closures)",
+      "Bash(curl -s http://localhost:3001/uz/frontend/vue/reactivity)",
+      "Bash(curl -s http://localhost:3001/uz/frontend/typescript/generics)",
+      "Bash(curl -s http://localhost:3001/uz/frontend/seo/basics)",
+      "Bash(curl -s -o /dev/null -w \"status: %{http_code}\\\\n\" http://localhost:3001/uz/frontend/frontend-tools/bundlers)",
+      "Bash(export LC_ALL=C.UTF-8)",
+      "Bash(curl -s -o /dev/null -w \"ru: %{http_code}\\\\n\" http://localhost:3001/frontend/javascript/bind-apply-call)",
+      "Bash(curl -s -o /dev/null -w \"uz: %{http_code}\\\\n\" http://localhost:3001/uz/frontend/javascript/bind-apply-call)",
+      "Bash(curl -s http://localhost:3001/frontend/javascript/bind-apply-call)",
+      "Bash(curl -s http://localhost:3001/uz/frontend/javascript/bind-apply-call)",
+      "Bash(curl -s http://localhost:3001/frontend/javascript/closures -o \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--WEB3-nuxtjs-uz\\\\d4d3d2f3-c7ac-4fb6-ab88-3610dda2ed22\\\\scratchpad\\\\ru_js.html\")",
+      "Bash(curl -s http://localhost:3001/uz/frontend/javascript/closures -o \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--WEB3-nuxtjs-uz\\\\d4d3d2f3-c7ac-4fb6-ab88-3610dda2ed22\\\\scratchpad\\\\uz_js.html\")"
+    ]
+  }
+}

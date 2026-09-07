@@ -14,9 +14,11 @@ function toNavigationItems(children: ContentNavigationItem[] = []): NavigationIt
  * папка в content/<direction>/ автоматически станет новой группой.
  */
 export async function useQuestionSidebar(direction: DirectionSlug) {
-  // useRoute() должен быть вызван до await — иначе теряется контекст Nuxt
-  // (composable вызван вне Vue setup / plugin / middleware, см. NUXT_E1001).
+  // useRoute()/useLocalePath() должны быть вызваны до await — иначе теряется
+  // контекст Nuxt (composable вызван вне Vue setup / plugin / middleware,
+  // см. NUXT_E1001).
   const route = useRoute()
+  const localePath = useLocalePath()
   const navigation = await useContentNavigation(direction)
 
   const groups = computed<SidebarGroup[]>(() => {
@@ -33,9 +35,13 @@ export async function useQuestionSidebar(direction: DirectionSlug) {
   })
 
   const activeGroupPath = computed(() => {
-    const match = groups.value.find(
-      group => route.path === group.path || route.path.startsWith(`${group.path}/`)
-    )
+    // group.path приходит из content без сегмента локали, а route.path на
+    // en/uz его содержит — сравниваем с localePath(group.path), см. также
+    // QuestionItem.vue, где та же проблема для отдельных вопросов.
+    const match = groups.value.find((group) => {
+      const groupPath = localePath(group.path)
+      return route.path === groupPath || route.path.startsWith(`${groupPath}/`)
+    })
     return match?.path
   })
 

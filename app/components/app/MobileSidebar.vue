@@ -7,13 +7,14 @@ const props = defineProps<{
 
 const open = useMobileSidebar()
 const route = useRoute()
+const { t } = useI18n()
 
 // Закрываем Drawer при переходе на другой вопрос.
 watch(() => route.path, () => { open.value = false })
 </script>
 
 <template>
-  <USlideover v-model:open="open" side="left" title="Навигация">
+  <USlideover v-model:open="open" side="left" :title="t('sidebar.mobileTitle')">
     <template #body>
       <InterviewQuestionSidebar :direction="props.direction" />
     </template>

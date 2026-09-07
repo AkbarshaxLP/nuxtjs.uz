@@ -13,7 +13,7 @@
 - [x] Кастомная страница 404 / `error.vue`
 - [x] Тёмная и светлая тема
 - [x] Desktop: sticky sidebar. Mobile: Drawer (`USlideover`)
-- [x] Глобальный поиск Cmd+K (`UContentSearch`, поиск по title/description/tags/содержимому)
+- [x] Глобальный поиск Ctrl/Cmd+\ (`UContentSearch`, поиск по title/description/tags/содержимому; шорткат сменён с Cmd+K — часто перехватывается браузером/редактором)
 - [x] Composables вынесены из компонентов (`useContentNavigation`, `useQuestionSidebar`, `useQuestionNavigation`, `useQuestionSearch`)
 - [x] `npx nuxi typecheck` — 0 ошибок
 
@@ -30,6 +30,18 @@
 - [x] SEO — 6 вопросов (основы, семантическая вёрстка, on-page, off-page, technical SEO, производительность/скорость)
 - [x] Breadcrumb, метаданные (Difficulty/Category/Tags), связанные вопросы, навигация "← Предыдущий / Следующий →"
 - [ ] По желанию — добавить больше вопросов в существующие категории (просто новый `.md` файл, без правок кода)
+
+## Мультиязычность (ru/en/uz) — ru + uz активны, en скрыт
+
+- [x] `@nuxtjs/i18n`, `strategy: 'prefix_except_default'` — ru без префикса (`/frontend/...`), uz с префиксом (`/uz/frontend/...`)
+- [x] Сообщения UI в `i18n/i18n.config.ts` (важно: модуль ищет файл именно в папке `i18n/`, не в корне проекта)
+- [x] Контент разложен по `content/<locale>/<direction>/`; коллекции `<direction>_<locale>` в `content.config.ts` используют `source.prefix`, поэтому `path` вопроса не содержит локаль и одинаков для всех языков
+- [x] `useContentNavigation`/`useQuestionSearch` реактивно следят за локалью и перезапрашивают нужную коллекцию
+- [x] Переключатель языка — `<SwitchLocalePathLink>` (официальный компонент `@nuxtjs/i18n`, не ручной `switchLocalePath()`)
+- [x] Внутренние ссылки — `<NuxtLinkLocale>` / `useLocalePath()` везде, где раньше был обычный `NuxtLink`/`:to=`, иначе локаль сбрасывалась на ru при переходе
+- [x] Активное состояние сайдбара (`QuestionItem.vue`, `useQuestionSidebar.ts`) сравнивает `route.path` с `localePath(item.path)`, а не с самим `item.path`
+- [x] HTML, CSS, JavaScript, TypeScript, Vue.js, Nuxt.js, HTTP, Frontend инструменты, SEO — переведены на узбекский (93 вопроса)
+- [ ] English — контент и коллекции (`content/en/`, `*_en` в content.config.ts) существуют, но `en` временно убран из `locales` в `nuxt.config.ts` (не роутится, не в переключателе) — переведена только категория HTTP; включить обратно: вернуть `{ code: 'en', name: 'English' }`
 
 ## Backend направление — структура готова, контент не наполнен
 

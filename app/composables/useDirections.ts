@@ -8,18 +8,25 @@ import type { Direction } from '~/types/interview'
  * вообще существуют), а не контент вопросов. Все вопросы внутри направления
  * по-прежнему целиком приходят из @nuxt/content.
  *
+ * title/description локализованы через i18n.config.ts (ключ directions.*),
+ * поэтому это computed — чтобы переключение языка обновляло эти строки
+ * реактивно, даже если компонент, вызвавший useDirections(), не размонтируется
+ * заново при смене локали (напр. AppHeader живёт в layout).
+ *
  * Чтобы добавить новое направление (DevOps, QA, Python, ...):
- * 1. Добавить запись сюда.
- * 2. Создать коллекцию с тем же slug в content.config.ts.
- * 3. Создать content/<slug>/ с папками технологий.
+ * 1. Добавить запись сюда + переводы directions.<slug>.title/description в i18n.config.ts.
+ * 2. Создать коллекции `<slug>_ru`/`<slug>_en`/`<slug>_uz` в content.config.ts.
+ * 3. Создать content/<locale>/<slug>/ с папками технологий.
  * Sidebar, роутинг и страницы подхватят это без изменений кода.
  */
-export function useDirections(): Direction[] {
-  return [
+export function useDirections() {
+  const { t } = useI18n()
+
+  return computed<Direction[]>(() => [
     {
       slug: 'frontend',
-      title: 'Frontend',
-      description: 'HTML, CSS, JavaScript, TypeScript, Vue.js и Nuxt.js — вопросы и ответы для собеседований frontend-разработчиков.',
+      title: t('directions.frontend.title'),
+      description: t('directions.frontend.description'),
       icon: 'i-lucide-layout-panel-left',
       color: 'primary',
       technologies: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Vue.js', 'Nuxt.js'],
@@ -27,16 +34,16 @@ export function useDirections(): Direction[] {
     },
     {
       slug: 'backend',
-      title: 'Backend',
-      description: 'Node.js, NestJS, базы данных, PostgreSQL, Prisma, REST API и аутентификация.',
+      title: t('directions.backend.title'),
+      description: t('directions.backend.description'),
       icon: 'i-lucide-server',
       color: 'neutral',
       technologies: ['Node.js', 'NestJS', 'PostgreSQL', 'Databases', 'Prisma', 'Authentication'],
       available: false
     }
-  ]
+  ])
 }
 
 export function useDirection(slug: string): Direction | undefined {
-  return useDirections().find(direction => direction.slug === slug)
+  return useDirections().value.find(direction => direction.slug === slug)
 }

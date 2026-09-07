@@ -6,11 +6,15 @@ const props = defineProps<{
 }>()
 
 const route = useRoute()
-const isActive = computed(() => route.path === props.item.path)
+const localePath = useLocalePath()
+// item.path приходит из content без сегмента локали (см. content.config.ts),
+// а route.path на en/uz его содержит (/en/frontend/...) — поэтому сравнивать
+// нужно с localePath(item.path), а не с самим item.path напрямую.
+const isActive = computed(() => route.path === localePath(props.item.path))
 </script>
 
 <template>
-  <NuxtLink
+  <NuxtLinkLocale
     :to="item.path"
     class="block rounded-md px-3 py-1.5 text-sm transition-colors"
     :class="isActive
@@ -18,5 +22,5 @@ const isActive = computed(() => route.path === props.item.path)
       : 'text-muted hover:text-highlighted hover:bg-elevated/50'"
   >
     {{ item.title }}
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>

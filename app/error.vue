@@ -5,8 +5,11 @@ const props = defineProps<{
   error: NuxtError
 }>()
 
+const { t } = useI18n()
+const localePath = useLocalePath()
+
 function handleClear() {
-  clearError({ redirect: '/' })
+  clearError({ redirect: localePath('/') })
 }
 </script>
 
@@ -18,14 +21,14 @@ function handleClear() {
         <div>
           <p class="text-6xl font-bold text-primary">{{ props.error.statusCode }}</p>
           <h1 class="mt-4 text-2xl font-semibold text-highlighted">
-            {{ props.error.statusCode === 404 ? 'Страница не найдена' : 'Что-то пошло не так' }}
+            {{ props.error.statusCode === 404 ? t('error.notFound') : t('error.generic') }}
           </h1>
           <p class="mt-2 text-muted">
             {{ props.error.statusCode === 404
-              ? 'Такого вопроса или раздела пока не существует.'
+              ? t('error.notFoundDescription')
               : props.error.message }}
           </p>
-          <UButton class="mt-6" icon="i-lucide-home" @click="handleClear">На главную</UButton>
+          <UButton class="mt-6" icon="i-lucide-home" @click="handleClear">{{ t('error.home') }}</UButton>
         </div>
       </main>
     </div>

@@ -5,9 +5,11 @@ const mobileOpen = useMobileSidebar()
 // Тот же shared-composable, что использует UContentSearch внутри себя —
 // только так клик по кнопке реально открывает модалку поиска (см. QuestionSearch.vue).
 const { open: searchOpen } = useContentSearch()
+const { t } = useI18n()
+const localePath = useLocalePath()
 
 // Кнопка-гамбургер нужна только внутри направления, где есть сайдбар.
-const hasSidebar = computed(() => directions.some(d => d.slug === route.params.direction))
+const hasSidebar = computed(() => directions.value.some(d => d.slug === route.params.direction))
 
 const colorMode = useColorMode()
 function toggleColorMode() {
@@ -24,20 +26,20 @@ function toggleColorMode() {
         variant="ghost"
         color="neutral"
         class="lg:hidden"
-        aria-label="Открыть меню"
+        :aria-label="t('header.openMenu')"
         @click="mobileOpen = true"
       />
 
-      <NuxtLink to="/" class="flex items-center gap-2 font-semibold text-highlighted">
+      <NuxtLinkLocale to="/" class="flex items-center gap-2 font-semibold text-highlighted">
         <UIcon name="i-lucide-graduation-cap" class="size-5 text-primary" />
         <span class="hidden sm:inline">Interview Prep</span>
-      </NuxtLink>
+      </NuxtLinkLocale>
 
       <nav class="ml-2 hidden items-center gap-1 md:flex">
         <UButton
           v-for="direction in directions"
           :key="direction.slug"
-          :to="direction.available ? `/${direction.slug}` : undefined"
+          :to="direction.available ? localePath(`/${direction.slug}`) : undefined"
           :disabled="!direction.available"
           variant="ghost"
           color="neutral"
@@ -56,7 +58,7 @@ function toggleColorMode() {
           class="hidden sm:flex"
           @click="searchOpen = true"
         >
-          Поиск
+          {{ t('search.button') }}
           <template #trailing>
             <UKbd value="meta" />
             <UKbd value="\" />
@@ -67,15 +69,17 @@ function toggleColorMode() {
           variant="ghost"
           color="neutral"
           class="sm:hidden"
-          aria-label="Поиск"
+          :aria-label="t('search.button')"
           @click="searchOpen = true"
         />
+
+        <AppLanguageSwitcher />
 
         <UButton
           :icon="colorMode.value === 'dark' ? 'i-lucide-moon' : 'i-lucide-sun'"
           variant="ghost"
           color="neutral"
-          aria-label="Переключить тему"
+          :aria-label="t('header.toggleTheme')"
           @click="toggleColorMode"
         />
       </div>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'default' })
 
+const { t } = useI18n()
+
 useSeoMeta({
-  title: 'Interview Prep — подготовка к техническим собеседованиям',
-  description: 'Вопросы и ответы для подготовки к собеседованиям: Frontend и Backend разработка.'
+  title: () => t('home.seoTitle'),
+  description: () => t('home.seoDescription')
 })
 
 const directions = useDirections()
@@ -12,13 +14,12 @@ const directions = useDirections()
 <template>
   <div class="mx-auto max-w-[1100px] px-4 py-16 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <UBadge color="primary" variant="subtle" class="mb-4">Бесплатная подготовка</UBadge>
+      <UBadge color="primary" variant="subtle" class="mb-4">{{ t('home.badge') }}</UBadge>
       <h1 class="text-4xl font-bold tracking-tight text-highlighted sm:text-5xl">
-        Подготовка к техническим собеседованиям
+        {{ t('home.title') }}
       </h1>
       <p class="mt-4 text-lg text-muted">
-        Структурированные вопросы и ответы по ключевым технологиям.
-        Выберите направление, чтобы начать.
+        {{ t('home.subtitle') }}
       </p>
     </div>
 

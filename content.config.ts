@@ -13,24 +13,40 @@ const questionSchema = z.object({
   related: z.array(z.string()).default([]) // заголовки/ссылки на связанные вопросы
 })
 
-export default defineContentConfig({
-  collections: {
-    // Каждое направление — своя коллекция типа "page":
-    // 1 markdown-файл = 1 страница, путь генерируется из структуры папок.
-    // Источник включает *.md (вопросы/index) и .navigation.yml (метаданные
-    // категорий — заголовок/иконка, см. nuxt/content#3092: без .yml в glob
-    // Nuxt Content их игнорирует). Специально НЕ используется '**' целиком,
-    // чтобы в коллекцию случайно не попали посторонние файлы (изображения,
-    // скрипты и т.д.), которые могут лежать в content/ вне структуры вопросов.
-    frontend: defineCollection({
-      type: 'page',
-      source: 'frontend/**/*.{md,yml}',
-      schema: questionSchema
-    }),
-    backend: defineCollection({
-      type: 'page',
-      source: 'backend/**/*.{md,yml}',
-      schema: questionSchema
-    })
+// Поддерживаемые локали сайта. Должны совпадать с `locales` в nuxt.config.ts.
+const locales = ['ru', 'en', 'uz'] as const
+
+// Направления (совпадают с папками content/<locale>/<direction>/).
+const directions = ['frontend', 'backend'] as const
+
+/**
+ * i18n для контента: физически файлы разложены по content/<locale>/<direction>/…,
+ * но коллекция для КАЖДОЙ локали объявляет `prefix: '/<direction>'` — то есть
+ * итоговый `path` вопроса не содержит сегмента локали и одинаков для всех
+ * языков (например, "/frontend/http/http-methods" что для ru, что для en).
+ * Именно поэтому существующие страницы/роутинг (app/pages/[direction]/…)
+ * не знают о локали вообще — её выбирает только то, какую коллекцию
+ * (`<direction>_<locale>`) запросить, см. useContentNavigation.ts.
+ */
+function buildCollections() {
+  const collections: Record<string, ReturnType<typeof defineCollection>> = {}
+
+  for (const direction of directions) {
+    for (const locale of locales) {
+      collections[`${direction}_${locale}`] = defineCollection({
+        type: 'page',
+        source: {
+          include: `${locale}/${direction}/**/*.{md,yml}`,
+          prefix: `/${direction}`
+        },
+        schema: questionSchema
+      })
+    }
   }
+
+  return collections
+}
+
+export default defineContentConfig({
+  collections: buildCollections()
 })

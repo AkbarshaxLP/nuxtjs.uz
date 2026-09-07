@@ -8,10 +8,11 @@ const props = defineProps<{
 // Вся структура категорий/вопросов приходит из content — здесь нет
 // ни одного захардкоженного названия технологии.
 const { groups, activeGroupPath } = await useQuestionSidebar(props.direction)
+const { t } = useI18n()
 </script>
 
 <template>
-  <nav class="flex flex-col gap-1" aria-label="Навигация по вопросам">
+  <nav class="flex flex-col gap-1" :aria-label="t('sidebar.ariaLabel')">
     <template v-if="groups.length">
       <InterviewQuestionGroup
         v-for="group in groups"
@@ -21,7 +22,7 @@ const { groups, activeGroupPath } = await useQuestionSidebar(props.direction)
       />
     </template>
     <p v-else class="px-3 py-1.5 text-sm text-muted">
-      Контент скоро появится.
+      {{ t('sidebar.comingSoon') }}
     </p>
   </nav>
 </template>

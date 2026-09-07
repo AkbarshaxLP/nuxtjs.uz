@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import type { DirectionSlug } from '~/composables/useContentNavigation'
+import { collectionName, type DirectionSlug, type LocaleCode } from '~/composables/useContentNavigation'
 import type { NavigationItem } from '~/types/interview'
 
 definePageMeta({ layout: 'docs' })
 
 const route = useRoute()
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 const directionSlug = route.params.direction as string
 const direction = useDirection(directionSlug)
 if (!direction) {
-  throw createError({ statusCode: 404, message: 'Направление не найдено' })
+  throw createError({ statusCode: 404, message: t('direction.notFound') })
 }
 
 const slugParts = route.params.slug as string[]
 const path = computed(() => `/${directionSlug}/${slugParts.join('/')}`)
 
 const { data: question } = await useAsyncData(
-  () => `question-${path.value}`,
-  () => queryCollection(directionSlug as DirectionSlug).path(path.value).first()
+  () => `question-${path.value}-${locale.value}`,
+  () => queryCollection(collectionName(directionSlug as DirectionSlug, locale.value as LocaleCode)).path(path.value).first(),
+  { watch: [locale] }
 )
 
 if (!question.value) {
-  throw createError({ statusCode: 404, message: 'Вопрос не найден' })
+  throw createError({ statusCode: 404, message: t('question.notFound') })
 }
 
 useSeoMeta({
@@ -47,7 +50,7 @@ const relatedQuestions = computed<NavigationItem[]>(() => {
   <article v-if="question" class="max-w-3xl">
     <UBreadcrumb
       :items="[
-        { label: direction.title, to: `/${directionSlug}` },
+        { label: direction.title, to: localePath(`/${directionSlug}`) },
         ...(currentCategory ? [{ label: currentCategory }] : []),
         { label: question.title }
       ]"

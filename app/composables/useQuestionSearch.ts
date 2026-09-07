@@ -10,6 +10,13 @@ import { collectionName, type LocaleCode } from '~/composables/useContentNavigat
  *
  * Реактивно следит за локалью — при переключении языка пересобирает индекс
  * поиска из коллекций нужного языка.
+ *
+ * server: false — эти запросы нужны только клиенту (сам компонент поиска
+ * рендерится под ClientOnly). Без этого флага useAsyncData всё равно
+ * выполнял бы queryCollectionSearchSections (полный обход + парсинг AST
+ * ВСЕХ md-файлов всех направлений) на сервере при каждом SSR-рендере
+ * КАЖДОЙ страницы — компонент подключён в default.vue и docs.vue, то есть
+ * это происходило на каждый запрос к сайту и раздувало память Node-сервера.
  */
 export async function useQuestionSearch() {
   const { locale } = useI18n()
@@ -23,7 +30,7 @@ export async function useQuestionSearch() {
           ignoredTags: ['style'],
           extraFields: ['description', 'tags', 'category', 'difficulty']
         }),
-        { watch: [localeCode] }
+        { watch: [localeCode], server: false }
       ),
       useAsyncData(
         () => `search-sections-backend-${localeCode.value}`,
@@ -31,17 +38,17 @@ export async function useQuestionSearch() {
           ignoredTags: ['style'],
           extraFields: ['description', 'tags', 'category', 'difficulty']
         }),
-        { watch: [localeCode] }
+        { watch: [localeCode], server: false }
       ),
       useAsyncData(
         () => `search-navigation-frontend-${localeCode.value}`,
         () => queryCollectionNavigation(collectionName('frontend', localeCode.value)),
-        { watch: [localeCode] }
+        { watch: [localeCode], server: false }
       ),
       useAsyncData(
         () => `search-navigation-backend-${localeCode.value}`,
         () => queryCollectionNavigation(collectionName('backend', localeCode.value)),
-        { watch: [localeCode] }
+        { watch: [localeCode], server: false }
       )
     ])
 

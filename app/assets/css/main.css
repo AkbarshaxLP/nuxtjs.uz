@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@plugin "@tailwindcss/typography";
+
+/* Комфортная типографика для длинного технического чтения */
+.prose {
+  --tw-prose-body: var(--ui-text-muted);
+  --tw-prose-headings: var(--ui-text-highlighted);
+  --tw-prose-links: var(--ui-primary);
+  --tw-prose-bold: var(--ui-text-highlighted);
+  --tw-prose-code: var(--ui-text-highlighted);
+  max-width: 72ch;
+}
+
+.prose pre {
+  border-radius: var(--ui-radius);
+}

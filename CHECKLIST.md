@@ -19,13 +19,15 @@
 
 ## Frontend направление — наполнено и работает
 
-- [x] HTML — 4 вопроса (семантика, доступность, формы, DOM)
-- [x] CSS — 6 вопросов (flexbox, grid, специфичность, позиционирование, единицы измерения, SCSS mixin)
-- [x] JavaScript — 14 вопросов (closures, event loop, promises, prototypes, синтаксический сахар, ES6+, callbacks, Web API, Babel, var/let/const, this, storage/cookies, ==/===, debounce)
-- [x] TypeScript — 5 вопросов (generics, utility types, interface vs type, any/unknown/never, readonly)
-- [x] Vue.js — 5 вопросов (Composition API, реактивность, жизненный цикл, компоненты, computed vs watch)
+- [x] HTML — 11 вопросов (семантика, доступность, формы, DOM, основы, категории тегов, атрибуты, `<head>`/метаданные, изображения/медиа, ссылки/навигация, таблицы/списки)
+- [x] CSS — 14 вопросов (flexbox, grid, специфичность, позиционирование, единицы измерения, SCSS mixin, основы, цвета/шрифты/текст, box model, responsive, анимации/переходы, современные возможности, псевдоклассы/псевдоэлементы, каскад/наследование)
+- [x] JavaScript — 20 вопросов (closures, event loop, promises, prototypes, синтаксический сахар, ES6+, callbacks, Web API, Babel, var/let/const, this, storage/cookies, ==/===, debounce, основы языка, функции, массивы и структуры данных, классы, ошибки/отладка, продвинутые темы)
+- [x] TypeScript — 13 вопросов (generics, utility types, interface vs type, any/unknown/never, readonly, основы, типизация функций, массивы/коллекции, union/intersection, продвинутые типы, классы и ООП, type narrowing/guards, антипаттерны)
+- [x] Vue.js — 14 вопросов (Composition API, реактивность, жизненный цикл, компоненты, computed vs watch, основы, состояние и данные, директивы, формы/события, Vue Router, Pinia, слоты, оптимизация, тестирование)
 - [x] Nuxt.js — 5 вопросов (SSR, CSR, composables, middleware, server API)
 - [x] HTTP — 2 вопроса (методы запросов, PUT vs PATCH)
+- [x] Frontend инструменты — 8 вопросов (бандлеры, пакетные менеджеры, CSS-препроцессоры, линтеры/форматтеры, тестирование, производительность, Storybook, аналитика)
+- [x] SEO — 6 вопросов (основы, семантическая вёрстка, on-page, off-page, technical SEO, производительность/скорость)
 - [x] Breadcrumb, метаданные (Difficulty/Category/Tags), связанные вопросы, навигация "← Предыдущий / Следующий →"
 - [ ] По желанию — добавить больше вопросов в существующие категории (просто новый `.md` файл, без правок кода)
 

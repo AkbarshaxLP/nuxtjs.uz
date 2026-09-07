@@ -2,7 +2,9 @@
 const route = useRoute()
 const directions = useDirections()
 const mobileOpen = useMobileSidebar()
-const searchOpen = useSearchPalette()
+// Тот же shared-composable, что использует UContentSearch внутри себя —
+// только так клик по кнопке реально открывает модалку поиска (см. QuestionSearch.vue).
+const { open: searchOpen } = useContentSearch()
 
 // Кнопка-гамбургер нужна только внутри направления, где есть сайдбар.
 const hasSidebar = computed(() => directions.some(d => d.slug === route.params.direction))
@@ -57,7 +59,7 @@ function toggleColorMode() {
           Поиск
           <template #trailing>
             <UKbd value="meta" />
-            <UKbd value="K" />
+            <UKbd value="\" />
           </template>
         </UButton>
         <UButton

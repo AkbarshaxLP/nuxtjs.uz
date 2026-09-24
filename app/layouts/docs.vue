@@ -19,5 +19,6 @@ const direction = computed(() => route.params.direction as DirectionSlug)
         <slot />
       </main>
     </div>
+    <AppFooter />
   </div>
 </template>

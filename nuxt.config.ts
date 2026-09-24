@@ -28,6 +28,16 @@ export default defineNuxtConfig({
   },
 
   content: {
+    // На части shared-хостингов (напр. cPanel на CentOS/CloudLinux 7) системный
+    // glibc старее 2.29 — под него не грузится прекомпилированный бинарник
+    // better-sqlite3 (по умолчанию), и ЛЮБОЙ SQL-запрос к контенту молча падает
+    // (см. историю в памяти/чате: "GLIBC_2.29 not found"), из-за чего вопросы
+    // и разделы отдают 404. node:sqlite — часть самого Node.js (>=22.5),
+    // собран внутри его официальных Linux-бинарников под куда более старый
+    // glibc, поэтому не зависит от системных библиотек хостинга.
+    experimental: {
+      sqliteConnector: 'native'
+    },
     build: {
       markdown: {
         highlight: {

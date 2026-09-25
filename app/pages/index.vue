@@ -5,7 +5,12 @@ const { t } = useI18n()
 
 useSeoMeta({
   title: () => t('home.seoTitle'),
-  description: () => t('home.seoDescription')
+  description: () => t('home.seoDescription'),
+  ogTitle: () => t('home.seoTitle'),
+  ogDescription: () => t('home.seoDescription'),
+  ogType: 'website',
+  twitterTitle: () => t('home.seoTitle'),
+  twitterDescription: () => t('home.seoDescription')
 })
 
 const directions = useDirections()

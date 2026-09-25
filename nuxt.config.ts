@@ -10,6 +10,15 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  app: {
+    head: {
+      meta: [
+        { property: 'og:site_name', content: 'Interview Prep' },
+        { name: 'twitter:card', content: 'summary' }
+      ]
+    }
+  },
+
   // ru — язык по умолчанию, без префикса в URL (/frontend/...).
   // uz получает префикс (/uz/frontend/...).
   // Сообщения UI лежат в i18n/i18n.config.ts, контент — в content/<locale>/.
@@ -19,9 +28,10 @@ export default defineNuxtConfig({
   // Контент content/en/ и коллекции *_en в content.config.ts не удалены —
   // чтобы включить обратно, достаточно вернуть { code: 'en', name: 'English' }.
   i18n: {
+    baseUrl: 'https://nuxtjs.uz',
     locales: [
-      { code: 'ru', name: 'Русский' },
-      { code: 'uz', name: "O'zbekcha" }
+      { code: 'ru', name: 'Русский', language: 'ru-RU' },
+      { code: 'uz', name: "O'zbekcha", language: 'uz-UZ' }
     ],
     defaultLocale: 'ru',
     strategy: 'prefix_except_default'

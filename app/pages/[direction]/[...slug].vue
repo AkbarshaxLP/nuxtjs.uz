@@ -28,8 +28,37 @@ if (!question.value) {
 
 useSeoMeta({
   title: () => `${question.value?.title} — ${direction.title}`,
-  description: () => question.value?.description
+  description: () => question.value?.description,
+  ogTitle: () => question.value?.title,
+  ogDescription: () => question.value?.description,
+  ogType: 'article',
+  twitterTitle: () => question.value?.title,
+  twitterDescription: () => question.value?.description
 })
+
+// QAPage structured data — даёт Google основание показывать вопрос как
+// rich-result прямо в выдаче, что для сайта вида "вопрос-ответ" даёт
+// заметно более заметный сниппет, чем обычная синяя ссылка.
+useHead(() => ({
+  script: question.value
+    ? [{
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'QAPage',
+          mainEntity: {
+            '@type': 'Question',
+            name: question.value.title,
+            text: question.value.description,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: question.value.description
+            }
+          }
+        })
+      }]
+    : []
+}))
 
 // Навигация направления нужна и для breadcrumb/категории, и для prev/next,
 // и для разрешения ссылок из frontmatter `related`.

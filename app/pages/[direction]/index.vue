@@ -14,7 +14,12 @@ if (!direction) {
 
 useSeoMeta({
   title: () => t('direction.pageTitle', { title: direction.title }),
-  description: direction.description
+  description: direction.description,
+  ogTitle: () => t('direction.pageTitle', { title: direction.title }),
+  ogDescription: direction.description,
+  ogType: 'website',
+  twitterTitle: () => t('direction.pageTitle', { title: direction.title }),
+  twitterDescription: direction.description
 })
 
 const { groups } = await useQuestionSidebar(slug as DirectionSlug)
